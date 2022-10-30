@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script type="module" src="index.js"></script>
+  <script>
+    let listsAsString=null;
+    function setView(){
+      const viewDone = !(document.getElementById("checkbox-undone").checked);
+      var myElement = document.getElementById("lists");
+      if (listsAsString===null) {
+        listsAsString = myElement.innerHTML;
+      }
+      if (viewDone) {
+        myElement.innerHTML = listsAsString;
+        return;
+        }
+      let myArray = listsAsString.split('<div class="task">');
+      var result="";
+      for (var myI=0; myI<myArray.length; myI++){
+        let nonCheckedArray = myArray[myI].split('<div class="task__done"></div>');
+        if (nonCheckedArray.length===2) result=result+ "<div class='task'>" + myArray[myI];
+        }
+      myElement.innerHTML=result;
+    }
+  </script>
+  
+
+  <title>Úkolníček</title>
+</head>
+
+<body>
+    <div class="todo">
+      <div>
+        <div class="todo__header">
+          <div class="date">
+            <div class="date__daynum">12</div>
+            <div class="date__monthyear">
+              <div class="date__month">dub</div>
+              <div class="date__year">2020</div>
+            </div>
+            <div class="date__day">čtvrtek</div>
+          </div>
+        </div>
+        <div class="todo__new">
+          <button class="btn-add">+</button>
+          <input id="new-task" class="new-task" type="text" />
+        </div>
+        <div class="todo__filter">
+          <label><input id="checkbox-undone" type="checkbox" onchange="setView()">&nbsp;Pouze nesplněné</label>
+        </div>
+        <div id="lists" class="todo__tasks">
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>
